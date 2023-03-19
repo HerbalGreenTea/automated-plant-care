@@ -1,6 +1,0 @@
-/.idea
-/.idea/misc.xml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/vcs.xml
-/.idea/workspace.xml
-/venv/
