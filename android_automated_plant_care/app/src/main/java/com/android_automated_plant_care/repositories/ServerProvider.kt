@@ -1,4 +1,4 @@
-package com.example.android_automated_plant_care
+package com.android_automated_plant_care.repositories
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

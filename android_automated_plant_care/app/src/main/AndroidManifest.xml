@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Android_automated_plant_care"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name="com.android_automated_plant_care.presentation.mainScreen.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

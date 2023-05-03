@@ -1,4 +1,4 @@
-package com.example.android_automated_plant_care.presentation
+package com.android_automated_plant_care.presentation.mainScreen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

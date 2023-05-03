@@ -1,4 +1,4 @@
-package com.example.android_automated_plant_care.presentation
+package com.android_automated_plant_care.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.android_automated_plant_care.ServerProvider
+import com.android_automated_plant_care.repositories.ServerProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

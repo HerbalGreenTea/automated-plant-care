@@ -1,4 +1,4 @@
-package com.example.android_automated_plant_care.presentation
+package com.android_automated_plant_care.presentation.createGrowingAreaScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

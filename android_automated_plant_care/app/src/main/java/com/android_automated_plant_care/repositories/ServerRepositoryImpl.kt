@@ -1,4 +1,4 @@
-package com.example.android_automated_plant_care
+package com.android_automated_plant_care.repositories
 
 import kotlinx.coroutines.delay
 import retrofit2.Response
