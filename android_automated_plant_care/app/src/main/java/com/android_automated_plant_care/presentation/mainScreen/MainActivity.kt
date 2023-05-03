@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.android_automated_plant_care.presentation.theme.MainTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -13,10 +14,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                content = { MainScreen() },
-            )
+            MainTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    content = { MainScreen() },
+                )
+            }
         }
     }
 }

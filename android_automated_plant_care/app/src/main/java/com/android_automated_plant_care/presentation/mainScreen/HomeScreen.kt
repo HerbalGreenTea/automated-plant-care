@@ -1,4 +1,4 @@
-package com.android_automated_plant_care.presentation
+package com.android_automated_plant_care.presentation.mainScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
