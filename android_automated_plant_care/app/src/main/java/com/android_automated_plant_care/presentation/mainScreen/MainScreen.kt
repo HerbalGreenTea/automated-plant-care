@@ -19,7 +19,7 @@ fun MainScreen() {
         composable(Screens.LIST_GROWING_AREA) {
             ListGrowingAreaScreen(
                 onClickCreateGrowingArea = { navController.navigate(Screens.CREATE_GROWING_AREA) },
-                onClickItemGrowingArea = { navController.navigate(Screens.DETAILS_GROWING_AREA_SCREEN) },
+                onClickItemGrowingArea = { navController.navigate(Screens.DETAILS_GROWING_AREA) },
             )
         }
         composable(Screens.CREATE_GROWING_AREA) {
@@ -27,14 +27,19 @@ fun MainScreen() {
                 onClickCreateGrowingArea = { navController.navigate(Screens.LIST_GROWING_AREA) }
             )
         }
-        composable(Screens.DETAILS_GROWING_AREA_SCREEN) {
+        composable(Screens.DETAILS_GROWING_AREA) {
             DetailsGrowingAreaScreen()
         }
+
+        // TODO убрать данный экран, нужен для теситрования
+//        composable("home") {
+//            HomeScreen()
+//        }
     }
 }
 
 object Screens {
     const val LIST_GROWING_AREA = "listGrowingArea"
     const val CREATE_GROWING_AREA = "createGrowingArea"
-    const val DETAILS_GROWING_AREA_SCREEN = "detailsGrowingArea"
+    const val DETAILS_GROWING_AREA = "detailsGrowingArea"
 }

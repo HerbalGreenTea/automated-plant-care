@@ -17,7 +17,7 @@ object ServerProvider {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    private val serverApi: ServerApi = retrofit.create(ServerApi::class.java)
+    private val sensorApi: SensorApi = retrofit.create(SensorApi::class.java)
 
-    val serverRepository = ServerRepositoryImpl(serverApi)
+    val sensorRepository = SensorRepositoryImpl(sensorApi)
 }

@@ -1,28 +1,82 @@
 package com.android_automated_plant_care.presentation.listGrowingAreaScreen
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android_automated_plant_care.repositories.InMemoryCache
 
 @Composable
 fun ListGrowingAreaScreen(
     onClickCreateGrowingArea: () -> Unit,
     onClickItemGrowingArea: () -> Unit,
 ) {
-    Column {
-        Text("List Screen")
-        Spacer(modifier = Modifier.height(32.dp))
-        Button(onClick = { onClickCreateGrowingArea() }) {
-            Text(text = "Create Growing Area")
+    Scaffold(
+        content = { paddingValues ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                items(
+                    items = InMemoryCache.getGrowingAreas(),
+                    itemContent = { growingAreaItem ->
+                        Spacer(modifier = Modifier.height(16.dp))
+                        GrowingAreaItem(
+                            growingArea = growingAreaItem,
+                            onClickItem = onClickItemGrowingArea,
+                        )
+                    },
+                )
+            }
+        },
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                FloatingActionButton(
+                    onClick = onClickCreateGrowingArea,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Добавить новую грядку"
+                    )
+                }
+            }
         }
-        Spacer(modifier = Modifier.height(32.dp))
-        Button(onClick = { onClickItemGrowingArea() }) {
-            Text(text = "Details Growing Area")
-        }
+    )
+}
+
+@Preview
+@Composable
+fun PreviewListGrowingAreaScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
+        ListGrowingAreaScreen(
+            onClickCreateGrowingArea = {},
+            onClickItemGrowingArea = {},
+        )
     }
 }
