@@ -19,8 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android_automated_plant_care.domain.GrowingArea
-import com.android_automated_plant_care.domain.PlantType
-import com.android_automated_plant_care.repositories.SensorData
+import com.android_automated_plant_care.repositories.InMemoryCache
 
 @Composable
 fun GrowingAreaItem(
@@ -39,33 +38,19 @@ fun GrowingAreaItem(
     ) {
         Text(text = growingArea.name)
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = growingArea.sensorData.humidity.toString())
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = growingArea.plantType.localName)
     }
 }
 
 @Preview
 @Composable
 fun PreviewGrowingAreaItem() {
-
-    val growingArea = GrowingArea(
-        name = "Грядка с фиалками",
-        sensorData = SensorData(
-            humidity = 10,
-            waterLevel = 20,
-            illumination = 30,
-        ),
-        plantType = PlantType.VIOLETS,
-    )
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
     ) {
         GrowingAreaItem(
-            growingArea = growingArea,
+            growingArea = InMemoryCache.getDefaultGrowingArea(),
             onClickItem = {},
         )
     }

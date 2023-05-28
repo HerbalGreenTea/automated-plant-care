@@ -20,12 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.android_automated_plant_care.presentation.mainScreen.Screens
 import com.android_automated_plant_care.repositories.InMemoryCache
 
 @Composable
 fun ListGrowingAreaScreen(
+    navController: NavController,
     onClickCreateGrowingArea: () -> Unit,
-    onClickItemGrowingArea: () -> Unit,
 ) {
     Scaffold(
         content = { paddingValues ->
@@ -40,7 +43,9 @@ fun ListGrowingAreaScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         GrowingAreaItem(
                             growingArea = growingAreaItem,
-                            onClickItem = onClickItemGrowingArea,
+                            onClickItem = {
+                                navController.navigate("${Screens.DETAILS_GROWING_AREA}/${growingAreaItem.id}")
+                            }
                         )
                     },
                 )
@@ -75,8 +80,8 @@ fun PreviewListGrowingAreaScreen() {
             .background(color = Color.White)
     ) {
         ListGrowingAreaScreen(
+            navController = rememberNavController(),
             onClickCreateGrowingArea = {},
-            onClickItemGrowingArea = {},
         )
     }
 }
