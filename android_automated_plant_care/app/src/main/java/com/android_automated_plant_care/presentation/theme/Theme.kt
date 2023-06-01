@@ -11,12 +11,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val LightColorScheme = lightColors(
+val LightColorScheme = lightColors(
     primary = Green,
     secondary = Silver,
 )
 
-private val DarkColorScheme = darkColors(
+val DarkColorScheme = darkColors(
     primary = Green,
     secondary = Silver,
 )

@@ -31,6 +31,7 @@ fun ListGrowingAreaScreen(
     onClickCreateGrowingArea: () -> Unit,
 ) {
     Scaffold(
+        modifier = Modifier.padding(horizontal = 16.dp),
         content = { paddingValues ->
             LazyColumn(
                 modifier = Modifier
