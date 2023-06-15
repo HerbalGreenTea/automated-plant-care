@@ -50,11 +50,11 @@ fun DetailsGrowingAreaScreen(
 
                     Text(text = "Данные с сенсоров", fontSize = 16.sp)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "Влажность: ${apiSensorData.humidity}")
+                    Text(text = "Влажность: ${sensorData.humidity.localName}")
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Уровень воды: ${apiSensorData.waterLevel}")
+                    Text(text = "Уровень воды: ${sensorData.waterLevel.localName}")
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Освещенность: ${apiSensorData.illumination}")
+                    Text(text = "Освещенность: ${sensorData.illumination.localName}")
                 }
             }
         },
