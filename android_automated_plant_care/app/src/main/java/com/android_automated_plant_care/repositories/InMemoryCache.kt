@@ -1,7 +1,7 @@
 package com.android_automated_plant_care.repositories
 
-import com.android_automated_plant_care.domain.GrowingArea
-import com.android_automated_plant_care.domain.PlantType
+import com.android_automated_plant_care.domain.models.GrowingArea
+import com.android_automated_plant_care.domain.models.PlantType
 import java.util.UUID
 
 object InMemoryCache {
@@ -10,7 +10,7 @@ object InMemoryCache {
         GrowingArea(
             id = UUID.randomUUID().toString(),
             name = "Грядка с фиалками",
-            sensorData = SensorData(
+            apiSensorData = ApiSensorData(
                 humidity = 10,
                 waterLevel = 20,
                 illumination = 30,
@@ -20,7 +20,7 @@ object InMemoryCache {
         GrowingArea(
             id = UUID.randomUUID().toString(),
             name = "Грядка с помидорами",
-            sensorData = SensorData(
+            apiSensorData = ApiSensorData(
                 humidity = 100,
                 waterLevel = 200,
                 illumination = 300,
@@ -50,7 +50,7 @@ object InMemoryCache {
         return GrowingArea(
             id = UUID.randomUUID().toString(),
             name = "Имя площади с растениями",
-            sensorData = SensorData(
+            apiSensorData = ApiSensorData(
                 humidity = 10,
                 waterLevel = 20,
                 illumination = 30,

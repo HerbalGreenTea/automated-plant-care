@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.android_automated_plant_care.domain.PlantType
+import com.android_automated_plant_care.domain.models.PlantType
+import com.android_automated_plant_care.presentation.controls.GrowingAreaButton
 import com.android_automated_plant_care.presentation.theme.Green
 import com.android_automated_plant_care.presentation.theme.Silver
 
@@ -115,18 +115,9 @@ fun CreateGrowingAreaScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Button(
+                GrowingAreaButton(
                     onClick = onClickCreateGrowingArea,
-                    content = {
-                        Text(
-                            text = "Создать площадь выращивания",
-                            fontSize = 18.sp
-                        )
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Green,
-                        contentColor = Silver
-                    )
+                    text = "создать"
                 )
             }
         }

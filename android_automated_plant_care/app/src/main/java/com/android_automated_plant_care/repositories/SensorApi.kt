@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface SensorApi {
 
     @GET("sensorData")
-    suspend fun getSensorData(): Response<SensorData>
+    suspend fun getSensorData(): Response<ApiSensorData>
 }

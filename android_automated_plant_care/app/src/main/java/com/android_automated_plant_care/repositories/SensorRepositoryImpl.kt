@@ -9,7 +9,7 @@ class SensorRepositoryImpl(private val SensorApi: SensorApi) {
         private const val TIMEOUT = 1000L
     }
 
-    suspend fun getSensorData(): SensorData? = performSuccess { SensorApi.getSensorData() }
+    suspend fun getSensorData(): ApiSensorData? = performSuccess { SensorApi.getSensorData() }
 
     private suspend fun <T> performSuccess(responseGetter: suspend () -> Response<T>): T? {
         while (true) {
