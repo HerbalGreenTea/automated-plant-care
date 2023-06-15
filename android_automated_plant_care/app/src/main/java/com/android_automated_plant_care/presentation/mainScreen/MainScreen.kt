@@ -28,7 +28,9 @@ fun MainScreen() {
         }
         composable(Screens.CREATE_GROWING_AREA) {
             CreateGrowingAreaScreen(
-                onClickCreateGrowingArea = { navController.navigate(Screens.LIST_GROWING_AREA) }
+                onClickCreateGrowingArea = {
+                    navController.navigate(Screens.LIST_GROWING_AREA)
+                }
             )
         }
         composable(

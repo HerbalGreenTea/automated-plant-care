@@ -10,18 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,12 +22,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android_automated_plant_care.domain.mappers.SensorDataMapper
+import com.android_automated_plant_care.domain.models.GrowingArea
+import com.android_automated_plant_care.domain.models.Humidity
+import com.android_automated_plant_care.domain.models.Illumination
 import com.android_automated_plant_care.domain.models.PlantType
+import com.android_automated_plant_care.domain.models.SensorData
+import com.android_automated_plant_care.domain.models.WaterLevel
 import com.android_automated_plant_care.presentation.controls.GrowingAreaButton
-import com.android_automated_plant_care.presentation.theme.Green
-import com.android_automated_plant_care.presentation.theme.Silver
+import com.android_automated_plant_care.presentation.controls.GrowingAreaDropDownButton
+import com.android_automated_plant_care.repositories.InMemoryCache
+import java.util.UUID
 
 @Composable
 fun CreateGrowingAreaScreen(
@@ -43,8 +43,10 @@ fun CreateGrowingAreaScreen(
     onClickCreateGrowingArea: () -> Unit
 ) {
     var name by remember { mutableStateOf(TextFieldValue("")) }
-    var expanded by remember { mutableStateOf(false) }
-    var selectedPlantType by remember { mutableStateOf(PlantType.DEFAULT.localName) }
+
+    var selectedPlantType by remember { mutableStateOf(PlantType.DEFAULT) }
+    var selectedHumidity by remember { mutableStateOf(Humidity.LOW) }
+    var selectedIllumination by remember { mutableStateOf(Illumination.LOW) }
 
     Scaffold(
         modifier = Modifier
@@ -61,53 +63,49 @@ fun CreateGrowingAreaScreen(
                     value = name,
                     onValueChange = { name = it },
                     placeholder = {
-                        Text("название")
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "название",
+                            textAlign = TextAlign.Center,
+                        )
                     },
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.White
                     )
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Box(
-                    modifier = Modifier.fillMaxWidth()
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
                 ) {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { expanded = true },
-                        content = {
-                            Row() {
-                                Icon(
-                                    tint = Green,
-                                    imageVector = Icons.Filled.ArrowDropDown,
-                                    contentDescription = "select plant type",
-                                )
-                                Text(text = selectedPlantType)
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Silver,
-                            contentColor = Green,
-                        )
-                    )
-                    DropdownMenu(
-                        modifier = Modifier.fillMaxWidth(),
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        content = {
-                            DropdownMenuItem(onClick = {
-                                selectedPlantType = PlantType.TOMATOES.localName
-                            }) {
-                                Text(text = PlantType.TOMATOES.localName)
-                            }
-                            Divider()
-                            DropdownMenuItem(onClick = {
-                                selectedPlantType = PlantType.VIOLETS.localName
-                            }) {
-                                Text(text = PlantType.VIOLETS.localName)
-                            }
-                        }
+                    Text(
+                        text = "Укажите тип растения и какие должны быть параметры влажности и освещенность",
+                        textAlign = TextAlign.Center,
                     )
                 }
+                Spacer(modifier = Modifier.height(32.dp))
+                GrowingAreaDropDownButton(
+                    startValue = selectedPlantType.localName,
+                    onValueChange = { selectedPlantType = SensorDataMapper.getPlaneTypeByLocalName(it) },
+                    contentDescription = "selected plane type",
+                    valuesForDropDownMenu = PlantType.values().map { it.localName },
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                GrowingAreaDropDownButton(
+                    startValue = selectedHumidity.localName,
+                    onValueChange = { selectedHumidity = SensorDataMapper.getHumidityByLocalName(it) },
+                    contentDescription = "selected humidity",
+                    valuesForDropDownMenu = Humidity.values().map { it.localName },
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                GrowingAreaDropDownButton(
+                    startValue = selectedIllumination.localName,
+                    onValueChange = { selectedIllumination = SensorDataMapper.getIlluminationByLocalName(it) },
+                    contentDescription = "selected illumination",
+                    valuesForDropDownMenu = Illumination.values().map { it.localName },
+                )
+                Spacer(modifier = Modifier.height(4.dp))
             }
         },
         bottomBar = {
@@ -116,7 +114,21 @@ fun CreateGrowingAreaScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 GrowingAreaButton(
-                    onClick = onClickCreateGrowingArea,
+                    onClick = {
+                        InMemoryCache.addGrowingArea(
+                            GrowingArea(
+                                id = UUID.randomUUID().toString(),
+                                name = name.text,
+                                sensorData = SensorData(
+                                    humidity = selectedHumidity,
+                                    illumination = selectedIllumination,
+                                    waterLevel = WaterLevel.HIGH,
+                                ),
+                                plantType = selectedPlantType
+                            )
+                        )
+                        onClickCreateGrowingArea()
+                    },
                     text = "создать"
                 )
             }

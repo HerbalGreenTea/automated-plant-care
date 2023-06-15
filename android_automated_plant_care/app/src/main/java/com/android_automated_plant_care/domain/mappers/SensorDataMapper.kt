@@ -2,6 +2,7 @@ package com.android_automated_plant_care.domain.mappers
 
 import com.android_automated_plant_care.domain.models.Humidity
 import com.android_automated_plant_care.domain.models.Illumination
+import com.android_automated_plant_care.domain.models.PlantType
 import com.android_automated_plant_care.domain.models.SensorData
 import com.android_automated_plant_care.domain.models.WaterLevel
 import com.android_automated_plant_care.repositories.ApiSensorData
@@ -22,5 +23,32 @@ object SensorDataMapper {
             waterLevel = WaterLevel.valueOf(apiSensorData.waterLevel),
             illumination = Illumination.valueOf(apiSensorData.illumination),
         )
+    }
+
+    fun getPlaneTypeByLocalName(localName: String): PlantType {
+        return when {
+            PlantType.DEFAULT.localName == localName -> PlantType.DEFAULT
+            PlantType.VIOLETS.localName == localName -> PlantType.VIOLETS
+            PlantType.TOMATOES.localName == localName -> PlantType.TOMATOES
+            else -> PlantType.DEFAULT
+        }
+    }
+
+    fun getHumidityByLocalName(localName: String): Humidity {
+        return when {
+            Humidity.LOW.localName == localName -> Humidity.LOW
+            Humidity.MEDIUM.localName == localName -> Humidity.MEDIUM
+            Humidity.HIGH.localName == localName -> Humidity.HIGH
+            else -> Humidity.LOW
+        }
+    }
+
+    fun getIlluminationByLocalName(localName: String): Illumination {
+        return when {
+            Illumination.LOW.localName == localName -> Illumination.LOW
+            Illumination.MEDIUM.localName == localName -> Illumination.MEDIUM
+            Illumination.HIGH.localName == localName -> Illumination.HIGH
+            else -> Illumination.LOW
+        }
     }
 }

@@ -15,8 +15,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.android_automated_plant_care.domain.models.GrowingArea
 import com.android_automated_plant_care.presentation.theme.Green
 import com.android_automated_plant_care.presentation.theme.Silver
@@ -40,12 +42,15 @@ fun GrowingAreaItem(
                     border = BorderStroke(1.dp, Green),
                     shape = RoundedCornerShape(10)
                 )
-                .padding(8.dp)
+                .padding(16.dp)
                 .clickable { onClickItem() },
             content = {
                 Text(
+                    modifier = Modifier.fillMaxWidth(),
                     text = growingArea.name,
-                    color = Green
+                    color = Green,
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center,
                 )
             }
         )
