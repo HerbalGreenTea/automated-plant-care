@@ -7,18 +7,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import io.ktor.server.application.*
-import java.nio.ByteBuffer
+import io.ktor.utils.io.*
 
 fun Application.configureSocket() {
-    val socketIoT = SocketForIoT()
-    socketIoT.startListen()
+    CustomSocket.startListen()
 }
 
-class SocketForIoT {
+object CustomSocket {
     fun startListen() {
         runBlocking(Dispatchers.IO) {
             val selectorManager = SelectorManager(Dispatchers.IO)
-            val serverSocket = aSocket(selectorManager).tcp().bind("192.168.57.120", 8080)
+            val serverSocket = aSocket(selectorManager).tcp().bind("192.168.1.105", 8081)
             var isListen = true
 
             while (isListen) {
@@ -41,6 +40,30 @@ class SocketForIoT {
                         isListen = false
                     }
                 }
+            }
+        }
+    }
+
+    fun sendData(data: String) {
+        runBlocking(Dispatchers.IO) {
+            val selectorManager = SelectorManager(Dispatchers.IO)
+            val socket = aSocket(selectorManager).tcp().connect("192.168.1.105", 8080)
+
+            val sendChannel = socket.openWriteChannel(autoFlush = true)
+
+            try {
+                sendChannel.writeStringUtf8(data)
+            } catch (e: Throwable) {
+                withContext(Dispatchers.IO) {
+                    socket.close()
+                    selectorManager.close()
+                }
+                println("Socket closed")
+            }
+
+            withContext(Dispatchers.IO) {
+                socket.close()
+                selectorManager.close()
             }
         }
     }
