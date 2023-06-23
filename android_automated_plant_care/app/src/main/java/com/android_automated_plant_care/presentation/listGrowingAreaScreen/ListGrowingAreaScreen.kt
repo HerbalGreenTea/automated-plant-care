@@ -15,6 +15,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,14 +24,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.android_automated_plant_care.domain.mappers.GrowingAreaMapper
+import com.android_automated_plant_care.domain.models.GrowingArea
 import com.android_automated_plant_care.presentation.mainScreen.Screens
 import com.android_automated_plant_care.repositories.InMemoryCache
+import com.android_automated_plant_care.repositories.ServerProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun ListGrowingAreaScreen(
     navController: NavController,
     onClickCreateGrowingArea: () -> Unit,
 ) {
+    val growingAreas = remember {
+        mutableStateOf(listOf<GrowingArea>())
+    }
+
     Scaffold(
         modifier = Modifier.padding(horizontal = 16.dp),
         content = { paddingValues ->
@@ -38,8 +50,15 @@ fun ListGrowingAreaScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val apiItems = ServerProvider.growingAreasRepository.getApiGrowingAreas()
+                    val items = apiItems?.map(GrowingAreaMapper::apiGrowingAreaToGrowingArea) ?: listOf()
+                    InMemoryCache.addGrowingAreas(items)
+                    growingAreas.value = items
+                }
+
                 items(
-                    items = InMemoryCache.getGrowingAreas(),
+                    items = growingAreas.value,
                     itemContent = { growingAreaItem ->
                         Spacer(modifier = Modifier.height(16.dp))
                         GrowingAreaItem(

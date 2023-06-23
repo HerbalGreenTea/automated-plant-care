@@ -3,13 +3,15 @@ package com.android_automated_plant_care.repositories
 import kotlinx.coroutines.delay
 import retrofit2.Response
 
-class SensorRepositoryImpl(private val SensorApi: SensorApi) {
+class GrowingAreasRepositoryImpl(private val GrowingAreasApi: GrowingAreasApi) {
 
     companion object {
         private const val TIMEOUT = 1000L
     }
 
-    suspend fun getSensorData(): ApiSensorData? = performSuccess { SensorApi.getSensorData() }
+    suspend fun getApiGrowingAreas(): List<ApiGrowingArea>? = performSuccess { GrowingAreasApi.getGrowingAreas() }
+
+    suspend fun putApiGrowingArea(apiGrowingArea: ApiGrowingArea) = GrowingAreasApi.putGrowingArea(apiGrowingArea)
 
     private suspend fun <T> performSuccess(responseGetter: suspend () -> Response<T>): T? {
         while (true) {

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.android_automated_plant_care.domain.mappers.GrowingAreaMapper
 import com.android_automated_plant_care.domain.mappers.SensorDataMapper
 import com.android_automated_plant_care.domain.models.GrowingArea
 import com.android_automated_plant_care.domain.models.Humidity
@@ -34,7 +35,11 @@ import com.android_automated_plant_care.domain.models.SensorData
 import com.android_automated_plant_care.domain.models.WaterLevel
 import com.android_automated_plant_care.presentation.controls.GrowingAreaButton
 import com.android_automated_plant_care.presentation.controls.GrowingAreaDropDownButton
-import com.android_automated_plant_care.repositories.InMemoryCache
+import com.android_automated_plant_care.repositories.ServerProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @Composable
@@ -115,8 +120,8 @@ fun CreateGrowingAreaScreen(
             ) {
                 GrowingAreaButton(
                     onClick = {
-                        InMemoryCache.addGrowingArea(
-                            GrowingArea(
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val growingArea = GrowingArea(
                                 id = UUID.randomUUID().toString(),
                                 name = name.text,
                                 sensorData = SensorData(
@@ -126,8 +131,13 @@ fun CreateGrowingAreaScreen(
                                 ),
                                 plantType = selectedPlantType
                             )
-                        )
-                        onClickCreateGrowingArea()
+
+                            ServerProvider.growingAreasRepository.putApiGrowingArea(GrowingAreaMapper.growingAreaToApiGrowingArea(growingArea))
+
+                            withContext(Dispatchers.Main) {
+                                onClickCreateGrowingArea()
+                            }
+                        }
                     },
                     text = "создать"
                 )

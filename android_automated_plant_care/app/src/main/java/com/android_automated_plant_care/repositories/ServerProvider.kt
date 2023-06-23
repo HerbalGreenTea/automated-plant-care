@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServerProvider {
-    private val URL = "http://192.168.1.106:8080"
+    private val URL = "http://192.168.1.105:8080"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val gson = GsonBuilder().create()
@@ -17,7 +17,7 @@ object ServerProvider {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    private val sensorApi: SensorApi = retrofit.create(SensorApi::class.java)
+    private val growingAreasApi: GrowingAreasApi = retrofit.create(GrowingAreasApi::class.java)
 
-    val sensorRepository = SensorRepositoryImpl(sensorApi)
+    val growingAreasRepository = GrowingAreasRepositoryImpl(growingAreasApi)
 }

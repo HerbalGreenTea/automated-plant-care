@@ -10,31 +10,12 @@ import java.util.UUID
 
 object InMemoryCache {
 
-    private val growingAreas = mutableListOf(
-        GrowingArea(
-            id = UUID.randomUUID().toString(),
-            name = "Грядка с фиалками",
-            sensorData = SensorData(
-                humidity = Humidity.MEDIUM,
-                waterLevel = WaterLevel.HIGH,
-                illumination = Illumination.MEDIUM,
-            ),
-            plantType = PlantType.VIOLETS,
-        ),
-        GrowingArea(
-            id = UUID.randomUUID().toString(),
-            name = "Грядка с помидорами",
-            sensorData = SensorData(
-                humidity = Humidity.LOW,
-                waterLevel = WaterLevel.LOW,
-                illumination = Illumination.HIGH,
-            ),
-            plantType = PlantType.TOMATOES,
-        )
-    )
+    private val growingAreas = mutableListOf<GrowingArea>()
 
-    fun getGrowingAreas(): List<GrowingArea> {
-        return growingAreas
+    fun getGrowingAreas(): List<GrowingArea> = growingAreas
+
+    fun addGrowingAreas(newGrowingAreas: List<GrowingArea>) {
+        growingAreas.addAll(newGrowingAreas)
     }
 
     fun getGrowingAreaById(id: String?): GrowingArea? {
@@ -44,10 +25,6 @@ object InMemoryCache {
             }
         }
         return null
-    }
-
-    fun addGrowingArea(growingArea: GrowingArea) {
-        growingAreas.add(growingArea)
     }
 
     fun getDefaultGrowingArea(): GrowingArea {
