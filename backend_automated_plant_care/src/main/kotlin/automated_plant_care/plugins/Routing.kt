@@ -6,15 +6,23 @@ import io.ktor.server.response.*
 import io.ktor.server.application.*
 
 fun Application.configureRouting() {
+    val sensorDataRepository = SensorDataRepository()
+
     routing {
         get("/sensorData") {
-            val sensorData = SensorData(
-                humidity = 100,
-                waterLevel = 200,
-                illumination = 300,
-            )
-
+            val sensorData = sensorDataRepository.getSensorData()
             call.respond(sensorData)
         }
+    }
+}
+
+class SensorDataRepository() {
+
+    fun getSensorData(): SensorData {
+        return SensorData(
+            humidity = 100,
+            waterLevel = 200,
+            illumination = 300,
+        )
     }
 }
