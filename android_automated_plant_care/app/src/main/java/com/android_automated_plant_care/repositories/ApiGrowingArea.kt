@@ -7,4 +7,5 @@ data class ApiGrowingArea(
     val name: String,
     val apiSensorData: ApiSensorData,
     val plantType: String,
+    val plantCondition: String,
 ) : Serializable

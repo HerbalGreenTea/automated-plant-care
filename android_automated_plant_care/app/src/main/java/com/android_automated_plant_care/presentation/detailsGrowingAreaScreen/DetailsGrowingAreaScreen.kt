@@ -43,6 +43,8 @@ fun DetailsGrowingAreaScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 with(growingArea) {
+                    Text(text = "Общая информация", fontSize = 16.sp)
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Название: $name")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Тип растения: ${plantType.localName}")
@@ -55,6 +57,14 @@ fun DetailsGrowingAreaScreen(
                     Text(text = "Уровень воды: ${sensorData.waterLevel.localName}")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Освещенность: ${sensorData.illumination.localName}")
+
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(text = "Состояние растения", fontSize = 16.sp)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    val plant = if (plantCondition == "good") "здорово" else "возможно заболевает"
+                    Text(text = "Растение $plant")
+
                 }
             }
         },

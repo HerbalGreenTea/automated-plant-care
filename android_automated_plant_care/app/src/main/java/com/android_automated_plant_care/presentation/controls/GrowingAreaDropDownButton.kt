@@ -61,7 +61,10 @@ fun GrowingAreaDropDownButton(
             content = {
                 valuesForDropDownMenu.forEach {
                     DropdownMenuItem(
-                        onClick = { onValueChange(it) },
+                        onClick = {
+                            onValueChange(it)
+                            expanded = false
+                        },
                         content = {
                             Text(text = it)
                         }

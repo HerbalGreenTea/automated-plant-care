@@ -5,4 +5,5 @@ data class GrowingArea(
     val name: String,
     val sensorData: SensorData,
     val plantType: PlantType,
+    val plantCondition: String,
 )

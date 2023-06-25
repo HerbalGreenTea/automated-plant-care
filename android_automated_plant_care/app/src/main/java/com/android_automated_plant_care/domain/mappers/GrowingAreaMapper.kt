@@ -12,6 +12,7 @@ object GrowingAreaMapper {
             name = growingArea.name,
             apiSensorData = SensorDataMapper.sensorDataToApiSensorData(growingArea.sensorData),
             plantType = growingArea.plantType.name,
+            plantCondition = growingArea.plantCondition,
         )
     }
 
@@ -21,6 +22,7 @@ object GrowingAreaMapper {
             name = apiGrowingArea.name,
             sensorData = SensorDataMapper.apiSensorDataToSensorData(apiGrowingArea.apiSensorData),
             plantType = PlantType.valueOf(apiGrowingArea.plantType),
+            plantCondition = apiGrowingArea.plantCondition,
         )
     }
 }

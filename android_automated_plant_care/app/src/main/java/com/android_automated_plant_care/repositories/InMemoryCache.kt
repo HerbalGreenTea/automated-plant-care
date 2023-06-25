@@ -37,6 +37,7 @@ object InMemoryCache {
                 illumination = Illumination.MEDIUM,
             ),
             plantType = PlantType.VIOLETS,
+            plantCondition = "good",
         )
     }
 }

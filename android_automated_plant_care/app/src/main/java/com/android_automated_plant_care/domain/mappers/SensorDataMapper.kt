@@ -29,7 +29,8 @@ object SensorDataMapper {
         return when {
             PlantType.DEFAULT.localName == localName -> PlantType.DEFAULT
             PlantType.VIOLETS.localName == localName -> PlantType.VIOLETS
-            PlantType.TOMATOES.localName == localName -> PlantType.TOMATOES
+            PlantType.MONSTERA.localName == localName -> PlantType.MONSTERA
+            PlantType.PELARGONIUM.localName == localName -> PlantType.PELARGONIUM
             else -> PlantType.DEFAULT
         }
     }

@@ -129,7 +129,8 @@ fun CreateGrowingAreaScreen(
                                     illumination = selectedIllumination,
                                     waterLevel = WaterLevel.HIGH,
                                 ),
-                                plantType = selectedPlantType
+                                plantType = selectedPlantType,
+                                plantCondition = "bad",
                             )
 
                             ServerProvider.growingAreasRepository.putApiGrowingArea(GrowingAreaMapper.growingAreaToApiGrowingArea(growingArea))
