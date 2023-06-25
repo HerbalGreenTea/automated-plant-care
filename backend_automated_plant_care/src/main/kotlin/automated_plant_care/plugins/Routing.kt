@@ -12,7 +12,15 @@ fun Application.configureRouting() {
     routing {
         get("/growingAreas") {
             val growingAreas = InMemoryCache.getGrowingAreas()
-            call.respond(growingAreas)
+
+            val growingAreasWithDataAboutPlant = growingAreas.map {
+                val dataAboutPlant = InMemoryCache.getDataAboutPlant(it.plantType)
+                it.copy(
+                    plantCondition = dataAboutPlant
+                )
+            }
+
+            call.respond(growingAreasWithDataAboutPlant)
         }
 
         put("/growingArea") {

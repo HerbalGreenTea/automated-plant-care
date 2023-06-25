@@ -2,12 +2,12 @@ package automated_plant_care.plugins
 
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
+import io.ktor.server.application.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import io.ktor.server.application.*
-import io.ktor.utils.io.*
 
 fun Application.configureSocket() {
     CustomSocket.startListen()
@@ -28,10 +28,9 @@ object CustomSocket {
 
                     try {
                         while (true) {
-                            val name = receiveChannel.readUTF8Line(1024)
-                            if (name != null) {
-                                println("data: $name")
-                            }
+                            val data = receiveChannel.readUTF8Line(1024)
+
+
                         }
                     } catch (e: Throwable) {
                         withContext(Dispatchers.IO) {
